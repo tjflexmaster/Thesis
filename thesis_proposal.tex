@@ -4,8 +4,12 @@
 \usepackage{pdfpages}
 \usepackage[a4paper, margin=1in]{geometry}
 \usepackage{rotating}
-\floatstyle{boxed} 
+\floatstyle{plain} 
 \restylefloat{figure}
+\floatstyle{boxed}
+\newfloat{boxedfig}{htp}{lop}
+\floatname{boxedfig}{Figure}
+\restylefloat{boxedfig}
 \newfloat{mapping}{htp}{lop}
 \floatname{mapping}{Mapping}
 \floatstyle{plain}
@@ -32,10 +36,10 @@ Universal Ground Control, Command and Control, and Visual Analysis.}
 \end{abstract}
 
 \section{INTRODUCTION}
-Micro Unmanned Aerial Vehicle (mUAV) Enabled Wilderness Search and Rescue
-(UE-WiSAR) has been a focus of the Human Centered Machine Intelligence (HCMI),
-Multiple Agent Intelligent Coordination and Control (MAGICC) and Computer Vision
-(CV) labs at Brigham Young University since 2005.  In that time research has
+Advances in Micro Unmanned Aerial Vehicle (mUAV) technology has pushed mUAVs
+into new frontiers.  UAV Enabled Wilderness Search and
+Rescue (UE-WiSAR), one of these frontiers, has been a focus of the Human
+Centered Machine Intelligence (HCMI), Multiple Agent Intelligent Coordination and Control (MAGICC) and Computer Vision (CV) labs at Brigham Young University since 2005.  In that time research has
 been conducted on human interaction with mUAVs, improving target detection by
 enhancing video taken from a mUAV, integrating mUAVs into a SAR environment,
 and improving the mUAVs chance of getting video footage of the target.  Over
@@ -48,7 +52,9 @@ Although the research has proven successful, many of the tools developed for
 UE-WiSAR are unfit to share with a broader community.  This proposal outlines
 the challenges faced by UE-WiSAR, the solutions discovered for overcoming these
 challenges and a plan for creating UE-WiSAR software that incorporates said
-solutions into a stable software package.
+solutions into a stable software package as part of an industrial thesis.  As an
+industrial thesis the emphasis is not on new research but on delivering high
+quality software
 
 %   A software package that will be a
 % viable asset to the SAR community, a model for future Human Robot Interaction
@@ -171,7 +177,7 @@ are small and relatively inexpensive; cost estimates are between \$1,000 and
 \$10,000 per mUAV
 \cite{goodrich2008supporting,goodrich2007using,adams2007camera}.
 These platforms represent a small fraction of the possible mUAVs that are capable of performing
-UE-WiSAR tasks.  One model that is currently receiving a lot of attention is the
+UE-WiSAR tasks.  One model that is currently receiving attention is the
 multi-rotor mUAVs which can move at slow speeds and remain stationary if needed
 \cite{almurib2011control}.  The relatively low cost of these mUAVs makes them
 attractive for aerial surveillance.  mUAVs also reduce the risk to search
@@ -219,19 +225,20 @@ single framework.  UE-WiSAR will do just that making it ideal for continued rese
 
 \subsection{Thesis Statement}
 The WiSAR research and prototype software can be refactored into a cohesive
-and stable software package, UE-WiSAR.  When finished UE-WiSAR will function
-as a new Search Tactic capable of performing aerial searches and integrating
+and stable software package, UAV Enabled Wilderness Search and Rescue
+(UE-WiSAR).
+When finished UE-WiSAR will function as a new Search Tactic capable of performing aerial searches and integrating
 with real SAR operations.
 UE-WiSAR will also follow industry design standards with clear documentation
 making it an idea platform for future research and development in the SAR, UAV,
 and academic communities.
 
 \section{PROJECT GOALS}
-Overcoming the obstacles of using mUAV for WiSAR operations has been a primary
-research focus at BYU since 2005.  In that time many solutions have been found
+Overcoming the obstacles of using mUAV for WiSAR (Wilderness Search and Resue)
+operations has been a primary research focus at BYU since 2005.  In that time many solutions have been found
 to overcome these obstacles.  These solutions will be outlined in greater detail
-later in the proposal.  In the process of discovering these solutions a lot of
-software was created.  This software was then used in user tests to determine
+later in the proposal.  In the process of discovering these solutions a plethera
+of software was created.  This software was then used in user tests to determine
 it's effectiveness.  Also, many studies where conducted in understanding SAR,
 human mUAV interaction, and mUAV-WiSAR integration.  These software pieces along
 with the knowledge of how to use them for WiSAR is incredibly valuable. 
@@ -267,7 +274,7 @@ person \cite{goodrich2008supporting}.
 UE-WiSAR is not useful if human users cannot detect signs of the target.  This
 fact stresses the importance of detecting targets that appear in captured
 footage. While UAV piloting has a great impact on the content and quality it
-isn't enough.  Low resolution, constant movement, and a small detection window
+is not enough.  Low resolution, constant movement, and a small detection window
 make human target detection unacceptably low.  To counteract these issues
 UE-WiSAR will use mosaicing and anomaly detection to improve detection
 rates with the goal of generating high object detection rates with mUAV video
@@ -285,8 +292,8 @@ organization of the UE-WiSAR data will improve the sharing of search data with
 SAR repositories such as the International Search \& Rescue Incident Database.
 
 \subsection{Stable R\&D Platform}
-UE-WiSAR has a lot of untapped potential.  The research that has been conducted
-at BYU represents the initial merging of exciting new technologies.  This
+UE-WiSAR has a great deal of untapped potential.  The research that has been
+conducted at BYU represents the initial merging of exciting new technologies.  This
 potential however is difficult to realize without a foundation to build upon. 
 The UE-WiSAR software is that foundation.  Without the need to create custom
 GCS, CC, SAR and VE interfaces, future researchers and developers can pursue
@@ -302,13 +309,15 @@ crashes during normal flight.  To better describe these obstacles and their
 relationship to UE-WiSAR each obstacle has been assigned to a solution category.
 Please see Figure~\ref{fig:obstaclemap} on page~\pageref{fig:obstaclemap}.
 
-\begin{mapping*}[htp]
+\begin{figure*}[htp]
 	\vspace{-80pt}
 	\hspace{-80pt}
-	\includegraphics[keepaspectratio=true, width=\paperheight, height=\paperheight,
-	 page=1, angle=90]{obstacle_solution_map.pdf}
-	 \label{fig:obstaclemap}
-\end{mapping*}
+	\includegraphics[keepaspectratio=true, width=\paperheight,
+	height=\paperheight, page=1, angle=90, scale=0.95,
+	trim=20 0 20 0]{obstacle_solution_map.pdf}
+	\caption{UE-WiSAR Obstacles}
+	\label{fig:obstaclemap}
+\end{figure*}
 
 
 \subsection{UAV Piloting}
@@ -485,6 +494,16 @@ The balancing of this dynamic relationship between the autonomous and
 operator-controlled elements of UE-WiSAR is important because it is directly
 linked to the usability of the solution.
 
+\begin{figure*}[htp]
+	\vspace{-80pt}
+	\hspace{-90pt}
+	\includegraphics[keepaspectratio=true, width=\paperheight,
+	height=\paperheight, page=3, angle=90, scale=0.95,
+	trim=10 0 10 0]{obstacle_solution_map.pdf}
+	\caption{UAV Piloting Solutions}
+	\label{fig:uavpilotingmap}
+\end{figure*}
+
 \section{SOLUTIONS}
 The solutions to the above mentioned obstacles are organized into three categories.
 See Figure~\ref{fig:obstaclemap} on page
@@ -500,13 +519,7 @@ This solution category focuses on overcoming obstacles
 associated with piloting the mUAV.  See Figure~\ref{fig:uavpilotingmap} on page
 \pageref{fig:uavpilotingmap}.
 
-\begin{mapping*}[htp]
-	\vspace{-80pt}
-	\hspace{-95pt}
-	\includegraphics[keepaspectratio=true, width=\paperheight, height=\paperheight,
-	 page=3, angle=90]{obstacle_solution_map.pdf}
-	 \label{fig:uavpilotingmap}
-\end{mapping*}
+
 % \begin{figure*}[htp]
 % 	\label{fig:uavpilotingmap}
 % 	\includegraphics[keepaspectratio=true,	height=1.0\textwidth, angle=90, page=3]{obstacle_solution_map.pdf}
@@ -570,13 +583,15 @@ addition of more features and adaptation to an MVC architecture
 This section focuses on detecting objects
 in video captured by the mUAV.  See Figure~\ref{fig:objectdetectionmap} on page~\pageref{fig:objectdetectionmap}.
 
-\begin{mapping*}[htp]
-	\vspace{-40pt}
+\begin{figure*}[htp]
+	\vspace{-55pt}
 	\hspace{-80pt}
-	\includegraphics[keepaspectratio=true, width=\paperheight, height=\paperheight,
-	 page=4, angle=90]{obstacle_solution_map.pdf}
-	 \label{fig:objectdetectionmap}
-\end{mapping*}
+	\includegraphics[keepaspectratio=true, width=\paperheight,
+	height=\paperheight, page=4, angle=90, scale=0.90,
+	trim=20 0 20 0]{obstacle_solution_map.pdf}
+	\caption{UAV Piloting Solutions}
+	\label{fig:objectdetectionmap}
+\end{figure*}
 % \begin{figure*}[htp]
 % 	\label{fig:objectdetectionmap}
 % 	\includegraphics[keepaspectratio=true,	height=1.0\textwidth, angle=90, page=4]{obstacle_solution_map.pdf}
@@ -639,13 +654,15 @@ WiSAR Integration focuses on introducing a mUAV to a
 WiSAR operation.  See Figure~\ref{fig:wisarintegrationmap} on
 page~\pageref{fig:wisarintegrationmap}.
 
-\begin{mapping*}[htp]
-	\vspace{-80pt}
+\begin{figure*}[htp]
+	\vspace{-90pt}
 	\hspace{-80pt}
-	\includegraphics[keepaspectratio=true, width=\paperheight, height=\paperheight,
-	 page=2, angle=90]{obstacle_solution_map.pdf}
-	 \label{fig:wisarintegrationmap}
-\end{mapping*}
+	\includegraphics[keepaspectratio=true, width=\paperheight,
+	height=\paperheight, page=2, angle=90, scale=0.95,
+	trim=10 0 10 0]{obstacle_solution_map.pdf}
+	\caption{WiSAR Integration}
+	\label{fig:wisarintegrationmap}
+\end{figure*}
 % \begin{figure*}[htp]
 % 	\label{fig:wisarintegrationmap}
 % 	\includegraphics[keepaspectratio=true,	height=1.0\textwidth, angle=90, page=2]{obstacle_solution_map.pdf}
