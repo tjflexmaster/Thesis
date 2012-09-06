@@ -540,14 +540,9 @@ captured during a flight.  Lastly, these flight paths can use HAG information to
 maintain the optimal HAG for object detection while also avoiding obstacles such
 as ridges or cliffs.
 
-No work has been done integrating this feature.
-
 \textbf{Pre-Load Terrain Data}.  Terrain data provided by a number of sources
 can be downloaded over the internet prior to the search.  This data is critical for
 implementing effective AFPs and POA distributions.
-
-Code to download terrain data has already been ported to QT.  What remains is to
-add new data sources and to integrate with UE-WiSAR \cite{uavCode}.
 
 \textbf{Modular Hardware Interface}.  To overcome the hardware variety obstacle
 UE-WiSAR will use piloting interfaces that must be implemented for specific technologies.
@@ -555,10 +550,6 @@ While the initial UE-WiSAR release will have limited hardware support, namely
 Procerus and Mikrocopter, more support can be added through implementing a
 single interface for the specific technology.  This approach minimizes the work and knowledge required to adapt
 the software to new hardware.
-
-These plugins have already been created and will only require minor adjustments.
-It should be noted that the Data Model for the mUAV is based on the work done by
-Clark in designing these plugins \cite{uavCode}.
 
 \textbf{UE-WiSAR Pilot UI}.  This user interface has two main
 requirements \cite{lin2010supporting}.  First is assigning tasks to the mUAV. 
@@ -574,10 +565,6 @@ all times and alert the pilot when user input is required.  Because this UI
 is the main focus point for the pilot, it is a primary concern for loss of
 situation awareness.  To avoid this the UI must be able to dynamically adjust
 the amount of automation needed as dictated by the situation.
-
-Clark has done a substantial amount of work on this.  What is needed is the
-addition of more features and adaptation to an MVC architecture
-\cite{uavCode}.
 
 \subsection{Object Detection}
 This section focuses on detecting objects
@@ -606,10 +593,6 @@ hit probability when using mosaiced views versus non-mosaiced views.  While
 there was an increase in false positive detections this increase is considered
 inconsequential along side the improvement to hit probability.
 
-Abbot et al. has successfully ported this feature into a QT Library and
-integrated it into UE-WiSAR \cite{serverCode}.  What remains is some code
-cleanup and adaptation to the new Data Model.
-
 \textbf{Spectral Anomaly Detection} \cite{thornton2011detection,
 rasmussen2008enhancement}.  In typical WiSAR video the majority of colors are
 varying shades of grey, brown, and green.  This process looks for objects that
@@ -617,19 +600,12 @@ are ``out-of-place''.  This autonomous detection will not replace user
 detection, instead it aids user detection by suggesting objects to the user for
 closer inspection.
 
-This feature requires a port into a QT library before
-it can be integrated into the UE-WiSAR code.
-
 \textbf{GPS Frame Referencing} \cite{morse2010coverage}.  This process uses
 geometry to map pixels to gps coordinates.  The
 algorithm uses the GPS coordinates of the mUAV, mUAV position, terrain data,
 and camera specifications to determine the relation of the point to the UAV. 
 While the process is simple, it suffers from the limited precision of mUAV
 sensors and may provide highly inaccurate locations.
-
-Ogden has created a library that can accomplish this task given mUAV and camera
-information \cite{serverCode}.  What is required is adaptation to the new Data
-Model.
 
 \textbf{Video Analyst UI} \cite{lin2010supporting}.  This UI is meant for users
 operating under the Video Analyst Role.  Its purpose is to help Video
@@ -644,10 +620,6 @@ along with other simple enhancements such as brightness, contrast, and rate of
 playback.  The last requirement is that the UI allow the analyst to communicate
 with the mUAV team.  As an analyst works they must be able to communicate
 findings to the mUAV team.
-
-Abbot et al. have done a substantial amount of work on this UI.  What remains is
-adaptation to an MVC architecture, bug fixes connected to memory management, and
-the addition of new features.
 
 \subsection{WiSAR Integration}
 WiSAR Integration focuses on introducing a mUAV to a
@@ -685,9 +657,6 @@ This role breakdown enables a
 mUAV team of two or more people to operate effectively through a clean breakdown
 of work and established communication channels.
 
-This will be accomplished through the separation of duties in the client
-software which has already begun \cite{uavCode, serverCode}.
-
 \textbf{Independent Technical Search Team}
 \cite{adams2009cognitive}.
 UE-WiSAR represents a single search tactic for locating missing persons.  This
@@ -697,13 +666,10 @@ The MM is responsible for obtaining the missing person data and entering the
 data into UE-WiSAR.  The MM is then responsible for constructing a mUAV search
 plan as directed from the chain of command.  As the mUAV team follows the
 search plan, everything is reported back to the MM who then relays relevant
-information back to the main chain of command.  
-
-This has somewhat been initiated in WonderServer and UE-WiSAR will build off of
-that design \cite{serverCode}.
+information back to the main chain of command.
 
 \textbf{Command \& Control UI} This UI is meant for users operating under the
-Incident Commander Role.  Its purpose is to facilitate the MM responsibilities. 
+Mission Manager Role.  Its purpose is to facilitate the MM responsibilities. 
 There are three main requirements for accomplishing this purpose.  The first is the ability to build a missing person profile. 
 Information such as the last known location, clothing color, destination,
 starting point, etc. is essential for the automation and the mUAV team. 
@@ -715,8 +681,6 @@ last requirement is the ability to receive communications from mUAV team members
 IC of detected objects, mUAV status, search progress.  The UI must also
 communicate this information in a way that it can be presented to the main chain
 of command.  Additionally the UI must be intuitive, clean, and simple.
-
-No work has been done on this UI.
 
 \textbf{Distributed System Design}  A client-server architecture has been chosen
 for UE-WiSAR for several reasons.  The first reason is the computational load
@@ -732,10 +696,6 @@ client applications can be written.  Clients can then choose which application
 to run according to their roles which in turn makes the client roles less
 confusing.
 
-A great deal of work has been done by Abbot et al. in establishing a TCP
-connection between servers and clients \cite{serverCode}.  UE-WiSAR will build
-on this work focusing on simplification of communication and unification of data protocols.
-
 \textbf{Video Annotations}  These are the primary means of communication for the
 Analysts.  When an Analyst detects an object they can click on the object and
 create an annotation.  The annotation will then carry information about that
@@ -746,9 +706,6 @@ annotation.  The annotation can then be modified as needed depending if it was a
 false alarm or a real sign.  If an annotation is a real sign it can be converted
 to a format acceptable to the external chain of command.
 
-This feature must still be ported into a QT library before it can be integrated
-with UE-WiSAR.
-
 \textbf{Persistent Incident Management}  Essentially this refers to a relational
 data model specifically designed for UE-WiSAR.  The root node of this data model
 will be an incident, all other data will be linked to an incident.  The model
@@ -758,20 +715,15 @@ data more accessible.  The model will also simplify persistent storage as xml
 files or a sql database.  In concert with the project goals this data model can
 be shared with other search groups and search databases to help improve WiSAR.
 
-No work has been done adding this feature.
-
-\textbf{See-Ability}\cite{engh2008see}  This is a method of determining how well
-an area has been searched by the mUAV.  The algorithm uses the position of the
+\textbf{See-Ability} \cite{engh2008see}  This is a method of determining how
+well an area has been searched by the mUAV.  The algorithm uses the position of the
 camera in relation to the ground to determine the quality of the view.  This can
 later be used to find how many times a location has been viewed, how many unique
 angles has it been viewed from, and what is the overall quality of the viewings.
 This can be a great help to the MM and Pilot in avoiding over-viewed areas,
 narrowing search parameters, and maintaining situation awareness.
 
-This feature must still be ported into a QT library before it can be integrated
-with UE-WiSAR.
-
-\textbf{POA Models}\cite{koester2008lostpersons}  Because UE-WiSAR must
+\textbf{POA Models} \cite{koester2008lostpersons}  Because UE-WiSAR must
 be able to act independently, two probability of area models will be added
 to the CC interface.  The first is the Segment Model.  This model allows the IC
 to strategically breakdown a large search region into smaller search regions. 
@@ -782,94 +734,140 @@ corridor with eminating rings that occur at specific distances.  The
 highest POA occurs inside the corridor and inside the first ring, then second
 ring, etc.
 
-No work has been done on adding this feature.
 
-\section{Specification of Work}
-As mentioned, a substantial amount of work has already been done in
-consolidating the prototype code and implementing the proposed project.  The
-current WonderServer project, developed in C++ on the QT framework, has a
-Server, Pilot UI, and Video Analyst UI \cite{uavCode, serverCode}.  While each
-component is incomplete, stable network communication, open GL integration, and mUAV Hardware communication are working.  The ability
-to perform these basic tasks proves the capability of the chosen framework.  The
-next step is to engineer the software to maximize the potential to fulfill its
-goals.  The Model View Controller (MVC) design pattern will represent the
-overall design.  This is ideal because UE-WiSAR has a minimum of four UIs that will all
-interact with the same Model.  To fit UE-WiSAR to the MVC pattern the following
-tasks must be completed.
+\section{DELIVERABLES}
+As an industrial thesis a major goal is to produce high quality software that is
+on par with industry standards.  Quality as it relates to the project goals is
+the users ability to perform tasks within their roles and to allow future
+developers to understand UE-WiSAR well enough to modify/enhance the software as
+needed.  To following descriptions of work will be used to validate that the
+project goals have been met and that the project is a success.
 
-\textbf{Data Model}  A Data Model will be designed to store information for a
-WiSAR incident.  All data that is relevent to the system will be represented in
-the Data Model.  The model will be responsible for assigning unique id's to
-objects and maintaining data integrity of the objects it stores.  To simplify
-model interaction the Facade pattern will be used both in and around the model
-wherever the logic becomes moderately complex.  The model will use appropriate
-design patterns to represent the data.
+Therefore, the first deliverable will be a detailed list of requirements
+organized into groups and prioritized.  Glass's law
+\cite[p.~16]{endres2003handbook} states that ``Requirement deficiencies are the
+prime source of project failures.''  The list of requirements is meant to be an ideal goal.
+Not every requirment will be acheived, and some may change, instead it is meant
+to be a road map.  By clarifying the project requirements early the student and
+committee members can make informed decisions, avoid mistakes, and measure progress.
+It is also expected that design specifications will improve the design and make
+prototyping more effective.  
 
-\textbf{Data Persistence}  Beneath the Model layer a Data Persistence layer will
-exist that can convert the Model into a persistent medium.  Initially this will
-be as serialized data files, however, the design allows for the addition of
-other mediums such as SQL without impacting the system.
+The second deliverable will be detailed design documents specifying the
+architecture, data model, workflows, dataflows, protocols, user manuals and
+language/framework considerations.  These documents will make up a collection
+of text, UML, and other documents.  Their purpose is to clarify how the system
+works and how it accomplishes project goals.  Boehm's first law
+\cite[p.~17]{endres2003handbook} states ``Errors are most frequent during the requirements and design activities and are the
+more expensive the later they are removed."  This step of the project will help
+to reduce bugs and development time by allowing for peer review and prototyping
+before major work is done.  Many of these documents are living documents and
+will change as the project progresses, some may not exist until after coding
+has been completed.  It is expected that requirements and design will take up to
+one third of the total project time.
 
-\textbf{Controllers}  The controllers are responsible for communicating between
-the Model and the View.   Because the View can be on a different machine than
-the Model this communication is more complex.  Views will be expected to
-maintain their own custom models.  The controller will be responsible for
-syncing the data in these models as necessary.  A client controller will
-interact with a sibling controller on the server as needed through a network
-interface.  Interfaces must be created for all Controllers before the
-controllers are created.
+The third deliverable will be the actual UAV Enabled Wilderness Search and
+Rescue code.  The code will be well documented, follow consistent coding
+practices, and compile on designated operating systems.  This represents the
+majority of work done on the project.
 
-\textbf{Views}  Interfaces must be created for all Views before the Views are
-created.  Each UI is made up of one or more Views and can become confusing. 
-Interfaces are pre-designed so that when implemented will ensure all required
-features are met.  A general idea of the requirements for each view are as
-follows:
+The fourth deliverable will be a demonstration of the software in a
+live environment with a real mUAV and controlled targets.  This demostration
+will show that core features exist, the software is stable, and users are able to perform tasks by following written
+instructions.  Core features are the set of features decided on by the student
+and committee that the software must have to be considered functional.  The
+users will be individuals, preferably familiar with WiSAR, unfamiliar with
+operating the UE-WiSAR software.  At least one user per role will be involved. 
+An experienced mUAV pilot will also be involved to reduce risk to equipment. 
+Basic tasks will be assigned that require use of the core features.  This will
+not be an exercise in validating prior research.
 
-\begin{itemize}
-	\item \textbf{Server}
-	\begin{itemize}
-	  \item Add/Edit mUAV Hardware Connections
-	  \item Add/Edit an Incident
-	  \item View Terrain Data
-	  \item View Video
-	\end{itemize}
-	
-	\item \textbf{Command \& Control UI}
-	\begin{itemize}
-	  \item Add/Edit an Incident
-	  \item Add/Edit POA Models
-	  \item View Terrain Data
-	  \item View See-Ability
-	  \item View Annotations
-	  \item View Video
-	\end{itemize}
-	
-	\item \textbf{Pilot UI}
-	\begin{itemize}
-	  \item Add/Edit mUAV Hardware Connections
-	  \item Add/Edit Flight Paths
-	  \item View Terrain Data
-	  \item View Search Areas
-	  \item View Annotations
-	  \item View mUAV Status
-	  \item View Live Video
-	\end{itemize}
-	
-	\item \textbf{Video Analyst UI}
-	\begin{itemize}
-	  \item View Video
-	  \item Add/Edit Annotations
-	  \item View Incident Information
-	\end{itemize}
-\end{itemize}
-
-There is also work that must be done outside of the MVC structure.  Most of the
-autonomous solutions that will be implemented integrate with the Data Model,
-however, they exist separate from the MVC design.
-These solutions will be implemented as independent libraries that will be used
-by the Data Model and Controllers as needed.  An example of this is Automatic
-Flight Path Generation, Mosaicing, Anomoly Detection, etc.  The status of
-these libraries was described previously.
+% \section{Specification of Work}
+% As mentioned, a substantial amount of work has already been done in
+% consolidating the prototype code and implementing the proposed project.  The
+% current WonderServer project, developed in C++ on the QT framework, has a
+% Server, Pilot UI, and Video Analyst UI \cite{uavCode, serverCode}.  While each
+% component is incomplete, stable network communication, open GL integration, and mUAV Hardware communication are working.  The ability
+% to perform these basic tasks proves the capability of the chosen framework.  The
+% next step is to engineer the software to maximize the potential to fulfill its
+% goals.  The Model View Controller (MVC) design pattern will represent the
+% overall design.  This is ideal because UE-WiSAR has a minimum of four UIs that will all
+% interact with the same Model.  To fit UE-WiSAR to the MVC pattern the following
+% tasks must be completed.
+% 
+% \textbf{Data Model}  A Data Model will be designed to store information for a
+% WiSAR incident.  All data that is relevent to the system will be represented in
+% the Data Model.  The model will be responsible for assigning unique id's to
+% objects and maintaining data integrity of the objects it stores.  To simplify
+% model interaction the Facade pattern will be used both in and around the model
+% wherever the logic becomes moderately complex.  The model will use appropriate
+% design patterns to represent the data.
+% 
+% \textbf{Data Persistence}  Beneath the Model layer a Data Persistence layer will
+% exist that can convert the Model into a persistent medium.  Initially this will
+% be as serialized data files, however, the design allows for the addition of
+% other mediums such as SQL without impacting the system.
+% 
+% \textbf{Controllers}  The controllers are responsible for communicating between
+% the Model and the View.   Because the View can be on a different machine than
+% the Model this communication is more complex.  Views will be expected to
+% maintain their own custom models.  The controller will be responsible for
+% syncing the data in these models as necessary.  A client controller will
+% interact with a sibling controller on the server as needed through a network
+% interface.  Interfaces must be created for all Controllers before the
+% controllers are created.
+% 
+% \textbf{Views}  Interfaces must be created for all Views before the Views are
+% created.  Each UI is made up of one or more Views and can become confusing. 
+% Interfaces are pre-designed so that when implemented will ensure all required
+% features are met.  A general idea of the requirements for each view are as
+% follows:
+% 
+% \begin{itemize}
+% 	\item \textbf{Server}
+% 	\begin{itemize}
+% 	  \item Add/Edit mUAV Hardware Connections
+% 	  \item Add/Edit an Incident
+% 	  \item View Terrain Data
+% 	  \item View Video
+% 	\end{itemize}
+% 	
+% 	\item \textbf{Command \& Control UI}
+% 	\begin{itemize}
+% 	  \item Add/Edit an Incident
+% 	  \item Add/Edit POA Models
+% 	  \item View Terrain Data
+% 	  \item View See-Ability
+% 	  \item View Annotations
+% 	  \item View Video
+% 	\end{itemize}
+% 	
+% 	\item \textbf{Pilot UI}
+% 	\begin{itemize}
+% 	  \item Add/Edit mUAV Hardware Connections
+% 	  \item Add/Edit Flight Paths
+% 	  \item View Terrain Data
+% 	  \item View Search Areas
+% 	  \item View Annotations
+% 	  \item View mUAV Status
+% 	  \item View Live Video
+% 	\end{itemize}
+% 	
+% 	\item \textbf{Video Analyst UI}
+% 	\begin{itemize}
+% 	  \item View Video
+% 	  \item Add/Edit Annotations
+% 	  \item View Incident Information
+% 	\end{itemize}
+% \end{itemize}
+% 
+% There is also work that must be done outside of the MVC structure.  Most of the
+% autonomous solutions that will be implemented integrate with the Data Model,
+% however, they exist separate from the MVC design.
+% These solutions will be implemented as independent libraries that will be used
+% by the Data Model and Controllers as needed.  An example of this is Automatic
+% Flight Path Generation, Mosaicing, Anomoly Detection, etc.  The status of
+% these libraries was described previously.
 
 % \subsection{Time to Complete}
 % An important concern is the time to complete this project.  It is possible that
@@ -902,118 +900,126 @@ these libraries was described previously.
 % when released most community contributions will be in the form of GUI
 % enhancements.
 
-\section{Validation}
-There are two aspects to the validation of the project.  The first is validation
-of the quality of the software.  As a project-based thesis a major goal is to
-produce software that is on par with industry standards.  This will be
-accomplished through documentation.  Comments will be included on each class
-that describe the purpose of the class and what it does.  Using Doxygen this
-data will be compiled into detailed class documents.  Also, design documents
-describing the Data Model, Design Patterns, WiSAR Integration and Usage of key
-features will be created.
+% \section{Validation}
+% There are two aspects to the validation of the project.  The first is validation
+% of the quality of the software.  As an industrial thesis a major goal is to
+% produce software that is on par with industry standards.  This will be
+% accomplished through documentation.  Comments will be included on each class
+% that describe the purpose of the class and what it does.  Using Doxygen this
+% data will be compiled into detailed class documents.  Also, design documents
+% describing the Data Model, Design Patterns, WiSAR Integration and Usage of key
+% features will be created.
+% 
+% The second validation aspect will be the verification of the minimum set of
+% requirements.  Monthly design review meetings will be held, if needed the
+% requirements can be modified in these meetings.  The minimum list of
+% requirements will be verified by an individual familiar with the UE-WiSAR
+% software.  If the user can perform the minimum requirement list then the
+% software will be considered validated.  See Figure~\ref{fig:serverrequirements}
+% on page~\pageref{fig:serverrequirements}.
+% 
+% \begin{figure*}[htp]
+% 	\caption{Detailed Server Requirements}
+% 	\begin{itemize}
+% 		\item \textbf{Incident Information}
+% 		\begin{itemize}
+% 		  	\item Manage Search Incidents
+% 		  	\begin{itemize}
+% 			  	  \item Incident Area
+% 			  	  \item Missing Person Profile
+% 			  	  \item Last Known Locations
+% 	  	  	\end{itemize}
+% 	  	  	\item Load existing Search Incidents
+% 	  	  	\item Switch between Incidents
+% 	  	  	\item Generate POA models from Missing Person Data
+% 	  	  	\item Automatically Download Terrain Data for Incident Area
+% 		\end{itemize}
+% 		
+% 		\item \textbf{Terrain Data}
+% 		\begin{itemize}
+% 			\item Obtain Third Party Map Data for a specified incident area.
+% 	  		\begin{itemize}
+% 	  		  	\item MapQuest Image Tiles
+% 	  		  	\item OpenMaps Image Tiles
+% 	  		  	\item USGS NED 1/3 GridFloat
+% 	  		  	\item USGS LandCover GridFloat
+% 		  	\end{itemize}
+% 		  	\item Save Terrain Data to disk
+% 		  	\item Make Terrain Data available to clients
+% 		  	\item Perform fast queries on Terrain Data
+% 	  		\begin{itemize}
+% 	  		  	\item HAG of specific coordinate
+% 	  		  	\item LandCover of specific coordinate
+% 		  	\end{itemize}
+% 	  		\item Manage Incident Map Objects
+% 			\begin{itemize}
+% 			  \item Points
+% 			  \item Areas
+% 			  \item Custom Objects
+% 			\end{itemize}
+% 		\end{itemize}
+% 		
+% 		\item \textbf{Video}
+% 		\begin{itemize}
+% 	  		\item Manage Camera Profiles
+% 	  		\item Capture Video Frames
+% 	  		\begin{itemize}
+% 	  	 		\item Save Frames to Harddrive
+% 	  	  		\item Save GPS Location of Frame
+% 	  	  		\item Connect Frame to Incident
+% 	  	  		\item Homography Calculation on Frame
+% 	  	  		\item Anomoly Analysis on Frame
+% 	  		\end{itemize}
+% 		  	\item Stream Captured Video
+% 		  	\item Manage Annotations
+% 		\end{itemize}
+% 		
+% 		\item \textbf{UAV}
+% 		\begin{itemize}
+% 		  	\item Manage UAV Profiles
+% 		  	\item Manage UAV Plugins
+% 		  	\item Communicate with UAV
+% 		  	\begin{itemize}
+% 		  	  	\item Save UAV data to Harddisk
+% 		  	  	\item Issue Commands to UAV
+% 		  	  	\item Track UAV position
+% 	  	  	\end{itemize}
+% 	  	  	\item Generate Flight Paths
+% 	  	  	\item Monitor UAV Status
+% 	  	  	\item Manage See-Ability
+% 		\end{itemize}
+% 	\end{itemize}
+% 	
+% 	\label{fig:serverrequirements}
+% \end{figure*}
+\section{DELIMITATIONS}
+Due to the nature of software development and the size of this project there
+will be a large list of things to do that can be done in a reasonable amount of
+time.  The goal of this project is not to implement the maximum amount of
+features, instead the goal is to create a stable foundation for others to
+implement the features they choose.  This is particularly relevent in regards to
+user interfaces.  
 
-The second validation aspect will be the verification of the minimum set of
-requirements.  Monthly design review meetings will be held, if needed the
-requirements can be modified in these meetings.  The minimum list of
-requirements will be verified by an individual familiar with the UE-WiSAR
-software.  If the user can perform the minimum requirement list then the
-software will be considered validated.  See Figure~\ref{fig:serverrequirements}
-on page~\pageref{fig:serverrequirements}.
+This project will not create the ideal user interfaces as described in the
+solution section as those are subjective and become much too time consuming. 
+Instead the project will focus on functionality and creating basic user interfaces that can be
+easily replaced by future developers.
 
-\begin{figure*}[htp]
-	\caption{Detailed Server Requirements}
-	\begin{itemize}
-		\item \textbf{Incident Information}
-		\begin{itemize}
-		  	\item Manage Search Incidents
-		  	\begin{itemize}
-			  	  \item Incident Area
-			  	  \item Missing Person Profile
-			  	  \item Last Known Locations
-	  	  	\end{itemize}
-	  	  	\item Load existing Search Incidents
-	  	  	\item Switch between Incidents
-	  	  	\item Generate POA models from Missing Person Data
-	  	  	\item Automatically Download Terrain Data for Incident Area
-		\end{itemize}
-		
-		\item \textbf{Terrain Data}
-		\begin{itemize}
-			\item Obtain Third Party Map Data for a specified incident area.
-	  		\begin{itemize}
-	  		  	\item MapQuest Image Tiles
-	  		  	\item OpenMaps Image Tiles
-	  		  	\item USGS NED 1/3 GridFloat
-	  		  	\item USGS LandCover GridFloat
-		  	\end{itemize}
-		  	\item Save Terrain Data to disk
-		  	\item Make Terrain Data available to clients
-		  	\item Perform fast queries on Terrain Data
-	  		\begin{itemize}
-	  		  	\item HAG of specific coordinate
-	  		  	\item LandCover of specific coordinate
-		  	\end{itemize}
-	  		\item Manage Incident Map Objects
-			\begin{itemize}
-			  \item Points
-			  \item Areas
-			  \item Custom Objects
-			\end{itemize}
-		\end{itemize}
-		
-		\item \textbf{Video}
-		\begin{itemize}
-	  		\item Manage Camera Profiles
-	  		\item Capture Video Frames
-	  		\begin{itemize}
-	  	 		\item Save Frames to Harddrive
-	  	  		\item Save GPS Location of Frame
-	  	  		\item Connect Frame to Incident
-	  	  		\item Homography Calculation on Frame
-	  	  		\item Anomoly Analysis on Frame
-	  		\end{itemize}
-		  	\item Stream Captured Video
-		  	\item Manage Annotations
-		\end{itemize}
-		
-		\item \textbf{UAV}
-		\begin{itemize}
-		  	\item Manage UAV Profiles
-		  	\item Manage UAV Plugins
-		  	\item Communicate with UAV
-		  	\begin{itemize}
-		  	  	\item Save UAV data to Harddisk
-		  	  	\item Issue Commands to UAV
-		  	  	\item Track UAV position
-	  	  	\end{itemize}
-	  	  	\item Generate Flight Paths
-	  	  	\item Monitor UAV Status
-	  	  	\item Manage See-Ability
-		\end{itemize}
-	\end{itemize}
-	
-	\label{fig:serverrequirements}
-\end{figure*}
-\section{Delimitations}
-There are a few things that this proposal does not take into account.  The first
-is the High Stress that is associated with SAR operations.  It is known that
-High Stress has a negative impact on an individuals cognitive load capacity,
-however, it is too complicated to include in this proposal.  
+The project also doesn't account for the High Stress that is associated with SAR
+operations.  It is known that High Stress has a negative impact on an
+individuals cognitive load capacity, however, it is too complicated to include in this proposal.  
 
-The next is the
-Steep Learning Curve.  There are several learning curves that are associated
+There are several learning curves that are associated
 with different aspects of this project.  Because learning curves are unavoidable
 and vary with the individual it is enough for this proposal that the software is
 targeted at as large a user group as possible.
 
-The last and possibly most impactful is the time to complete.  There are too
-many unknowns to accurately predict the amount of time a project this size will
-take to complete.  Therefore, the focus will be on completing the validation
-requirements and working closely with advisors during the development process to
-adjust the quality and feature sets of the software to fit with time
-constraints.
+There are too many unknowns to accurately predict the amount of time a project
+this size will take to complete.  The focus will be on the deliverables and
+working closely with advisors during the development process to adjust the
+requirements to fit with time constraints.
 
-\section{Conclusion}
+\section{CONCLUSION}
 UE-WiSAR represents an opportunity for the research done at BYU to serve a
 greater community.  As Thomas Edison once said ``The value of an idea lies in
 the using of it.''  UE-WiSAR will not only provide a new search Tactic for
@@ -1036,7 +1042,7 @@ to serve.
 % 	}]{obstacle_solution_map.pdf}
 
 \newpage
-\bibliography{wisar_library}
+\bibliography{wisar_library2}
 \nocite{*}
 \bibliographystyle{plain}
 
